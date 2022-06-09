@@ -153,3 +153,4 @@ cython_debug/
 
 pass.txt
 .DS_Store
+*.txt

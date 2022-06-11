@@ -38,16 +38,12 @@ def handle_new_question_request(update: Update, context: CallbackContext):
     questin_number = random.randrange(0, len(questions))
     question = questions[questin_number].get('Вопрос')
     answer = questions[questin_number].get('Ответ')
-    # Убрать до деплоя
-    logger.info(answer)
-    # context.user_data['answer'] = answer
     FRODE_DB.set(update.effective_chat.id, answer)
     update.message.reply_text(question)
     return PONDERING
 
 
 def handle_solution_attempt(update: Update, context: CallbackContext):
-    # answer = context.user_data.get('answer')
     answer = FRODE_DB.get(update.effective_chat.id)
     attempt = update.message.text
     if check_answer(answer, attempt):
@@ -61,18 +57,16 @@ def handle_solution_attempt(update: Update, context: CallbackContext):
 
 
 def handle_score(update: Update, context: CallbackContext):
-    logger.info('Ваш счет: ')
+    # update.message.reply_text('Ваш счет: ')
     return RECREATION
 
 
 def give_up(update: Update, context: CallbackContext):
-    # answer = context.user_data.get('answer')
     answer = FRODE_DB.get(update.effective_chat.id)
     update.message.reply_text(
         f'Привильный ответ - {answer}\n'
         f'Для следующего вопроса нажми «Новый вопрос»'
     )
-    # context.user_data.clear()
     return RECREATION
 
 

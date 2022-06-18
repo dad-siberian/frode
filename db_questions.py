@@ -22,6 +22,12 @@ def transfer_questions(file, questions_base):
             question_answer = {}
 
 
+def check_answer(correct_answer, attempt):
+    correct_answer.replace('(', '.', 1)
+    correct_answer = correct_answer.split('.')
+    return attempt.lower() == correct_answer[0].lower()
+
+
 def main():
     logging.config.dictConfig(LOGGING_CONFIG)
     

@@ -9,6 +9,7 @@ from vk_api.longpoll import VkEventType, VkLongPoll
 from vk_api.utils import get_random_id
 
 from db_config import FRODE_DB
+from db_questions import check_answer
 from log_config import LOGGING_CONFIG, TelegramLogsHandler
 
 logger = logging.getLogger(__file__)
@@ -41,12 +42,6 @@ def handle_solution_attempt(event, vk_api, keyboard):
         keyboard=keyboard.get_keyboard(),
         random_id=get_random_id(),
     )
-
-
-def check_answer(correct_answer, attempt):
-    correct_answer.replace('(', '.', 1)
-    correct_answer = correct_answer.split('.')
-    return attempt.lower() == correct_answer[0].lower()
 
 
 def give_up(event, vk_api, keyboard):

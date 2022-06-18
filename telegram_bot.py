@@ -9,6 +9,7 @@ from telegram.ext import (CallbackContext, CommandHandler, ConversationHandler,
                           Filters, MessageHandler, Updater)
 
 from db_config import FRODE_DB
+from db_questions import check_answer
 from log_config import LOGGING_CONFIG, TelegramLogsHandler
 
 logger = logging.getLogger(__file__)
@@ -76,12 +77,6 @@ def cancel(update: Update, context: CallbackContext):
         reply_markup=ReplyKeyboardRemove()
     )
     return ConversationHandler.END
-
-
-def check_answer(correct_answer, attempt):
-    correct_answer.replace('(', '.', 1)
-    correct_answer = correct_answer.split('.')
-    return attempt.lower() == correct_answer[0].lower()
 
 
 def main():

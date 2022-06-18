@@ -14,9 +14,7 @@ from log_config import LOGGING_CONFIG, TelegramLogsHandler
 logger = logging.getLogger(__file__)
 
 
-def handle_new_question_request(event, vk_api, keyboard):
-    with open('questions_base.json', 'r', encoding='utf-8') as file:
-        questions = json.load(file)
+def handle_new_question_request(event, vk_api, keyboard, questions):
     questin_number = random.randrange(0, len(questions))
     question = questions[questin_number].get('Вопрос')
     answer = questions[questin_number].get('Ответ')
@@ -75,6 +73,9 @@ def main():
     logging.config.dictConfig(LOGGING_CONFIG)
     logger.addHandler(TelegramLogsHandler(telegram_token, chat_id))
 
+    with open('questions_base.json', 'r', encoding='utf-8') as file:
+        questions = json.load(file)
+
     vk_session = vk.VkApi(token=vk_token)
     vk_api = vk_session.get_api()
     longpoll = VkLongPoll(vk_session)
@@ -91,7 +92,7 @@ def main():
             if event.text == 'Сдаться':
                 give_up(event, vk_api, keyboard)
             elif event.text == 'Новый вопрос':
-                handle_new_question_request(event, vk_api, keyboard)
+                handle_new_question_request(event, vk_api, keyboard, questions)
             else:
                 handle_solution_attempt(event, vk_api, keyboard)
 

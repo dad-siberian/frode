@@ -7,7 +7,7 @@ from log_config import LOGGING_CONFIG
 logger = logging.getLogger(__file__)
 
 
-def add_questions_in_base(file, questions_base):
+def transfer_questions(file, questions_base):
     with open(file, 'r', encoding='KOI8-R') as file:
         file_contents = file.read()
     question_answer = {}
@@ -29,7 +29,7 @@ def main():
     for root, dirs, files in os.walk('quiz-questions'):
         for file in files:
             question_file = os.path.join(root, file)
-            add_questions_in_base(question_file, questions_base)
+            transfer_questions(question_file, questions_base)
     with open('questions_base.json', 'w', encoding='utf-8') as file:
         json.dump(questions_base, file, ensure_ascii=False, indent=4)
 

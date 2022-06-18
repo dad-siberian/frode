@@ -4,7 +4,6 @@ import os
 import random
 
 import vk_api as vk
-from dotenv import load_dotenv
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 from vk_api.longpoll import VkEventType, VkLongPoll
 from vk_api.utils import get_random_id
@@ -69,7 +68,6 @@ def give_up(event, vk_api, keyboard):
 
 
 def main():
-    load_dotenv()
     vk_token = os.getenv('VK_TOKEN')
     telegram_token = os.getenv('TELEGRAM_TOKEN')
     chat_id = os.getenv('TG_CHAT_ID')

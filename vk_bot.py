@@ -15,9 +15,7 @@ logger = logging.getLogger(__file__)
 
 
 def handle_new_question_request(event, vk_api, keyboard, questions):
-    questin_number = random.randrange(0, len(questions))
-    question = questions[questin_number].get('Вопрос')
-    answer = questions[questin_number].get('Ответ')
+    question, answer = random.choice(questions).values()
     FRODE_DB.set(event.user_id, answer)
     vk_api.messages.send(
         user_id=event.user_id,

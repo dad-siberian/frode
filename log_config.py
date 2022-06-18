@@ -9,12 +9,12 @@ class TelegramLogsHandler(Handler):
     def __init__(self, telegram_token, chat_id):
         super().__init__()
         self.chat_id = chat_id
-        self.token = telegram_token
+        self.bot = Bot(telegram_token)
+
 
     def emit(self, record):
-        bot = Bot(token=self.token)
         log_entry = self.format(record)
-        bot.send_message(chat_id=self.chat_id, text=log_entry)
+        self.bot.send_message(chat_id=self.chat_id, text=log_entry)
 
 
 ERROR_LOG_FILENAME = "error.log"
